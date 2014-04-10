@@ -4,12 +4,12 @@
 class SHOP
 {	
 	////////////////////////////////////////////////////////////////////
-	//			ПЕРЕМЕННЫЕ ДЛЯ РАБОТЫ С КЛАССОМ SHOP				  //
+	//		ПЕРЕМЕННЫЕ ДЛЯ РАБОТЫ С КЛАССОМ SHOP		  //
 	////////////////////////////////////////////////////////////////////
 	private $NUMBER; #НОМЕР МАГАЗИНА(RMK.CODE)
 	
 	////////////////////////////////////////////////////////////////////
-	//				ФУНКЦИИ ДЛЯ РАБОТЫ С КЛАССОМ SHOP				  //
+	//		ФУНКЦИИ ДЛЯ РАБОТЫ С КЛАССОМ SHOP		  //
 	////////////////////////////////////////////////////////////////////
 	//------------------------------------------------------------------
 	# Функция установки номера магазина
@@ -40,8 +40,8 @@ class SHOP
 	function GET_STAT ($DB_obj, $date_begin, $date_end)
 	{
 		$DB_obj->query = "SELECT COUNT(*), SUM(SUMMWD), AVG(SUMMWD), MIN(SUMMWD), MAX(SUMMWD), 
-						  SUM(SUMM-SUMMWD) AS DISCOUNT FROM DOCUMENT WHERE (DOCUMENT.STATE = 1) 
-						  AND CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND (NSHOP IN ($this->NUMBER))";
+				  SUM(SUMM-SUMMWD) AS DISCOUNT FROM DOCUMENT WHERE (DOCUMENT.STATE = 1) 
+				  AND CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND (NSHOP IN ($this->NUMBER))";
 		$DB_obj->QUERY();	
 		
 		return $DB_obj->MAKE_ARRAY();
@@ -57,8 +57,8 @@ class SHOP
 			{
 				$result[$i] = array();
 				$DB_obj->query = "SELECT COUNT(*), SUM(SUMMWD), SUM(SUMM-SUMMWD) AS DISCOUNT FROM DOCUMENT WHERE (DOCUMENT.STATE = 1) AND (DOCUMENT.DOCKINDID = '$operation')
-								  AND DOCUMENT.CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND ABS(SUMMWD) BETWEEN ".($range[$i] + 1)." AND ".$range[$i+1]." 
-								  AND (DOCUMENT.NSHOP IN ($this->NUMBER))";
+						  AND DOCUMENT.CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND ABS(SUMMWD) BETWEEN ".($range[$i] + 1)." AND ".$range[$i+1]." 
+						  AND (DOCUMENT.NSHOP IN ($this->NUMBER))";
 				$DB_obj->QUERY();	
 				$DB_obj->NEXT();
 				
@@ -75,8 +75,8 @@ class SHOP
 		$prefix = $rows ? "SELECT FIRST ".$rows." SKIP ".$offset : "SELECT";
 		
 		$DB_obj->query = $prefix." DOCUMENT.ID, DOCUMENT.SUMMWD, DOCUMENT.OPENDATE, DOCUMENT.OPENTIME, DOCUMENT.CLOSEDATE,
-			 DOCUMENT.CLOSETIME, DOCUMENT.SUMM, DOCUMENT.CHEQUETYPE, DOCUMENT.NSHOP, (DOCUMENT.SUMM-DOCUMENT.SUMMWD) AS DISCOUNT FROM DOCUMENT WHERE
-			(DOCUMENT.STATE = 1) AND DOCUMENT.CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND (DOCUMENT.NSHOP IN ($this->NUMBER))";
+			 	 DOCUMENT.CLOSETIME, DOCUMENT.SUMM, DOCUMENT.CHEQUETYPE, DOCUMENT.NSHOP, (DOCUMENT.SUMM-DOCUMENT.SUMMWD) AS DISCOUNT FROM DOCUMENT WHERE
+				(DOCUMENT.STATE = 1) AND DOCUMENT.CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND (DOCUMENT.NSHOP IN ($this->NUMBER))";
 		$DB_obj->QUERY();	
 		
 		return $DB_obj->MAKE_ARRAY();
@@ -89,7 +89,7 @@ class SHOP
 		$prefix = $rows ? "SELECT FIRST ".$rows." SKIP ".$offset : "SELECT";
 	
 		$DB_obj->query = $prefix." DOCUMENT.ID FROM DOCUMENT WHERE
-			(DOCUMENT.STATE = 1) AND DOCUMENT.CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND (DOCUMENT.NSHOP IN ($this->NUMBER))";
+				(DOCUMENT.STATE = 1) AND DOCUMENT.CLOSEDATE BETWEEN '$date_begin' AND '$date_end' AND (DOCUMENT.NSHOP IN ($this->NUMBER))";
 		$DB_obj->QUERY();	
 		
 		return $DB_obj->MAKE_ARRAY("ID");
